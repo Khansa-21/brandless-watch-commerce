@@ -42,7 +42,7 @@ The UI supports two WhatsApp use cases:
 For a client deployment, the client provides their WhatsApp Business number in international format. Create a local `.env` file from `.env.example`:
 
 ```env
-VITE_WHATSAPP_NUMBER=923001234567
+VITE_WHATSAPP_NUMBER=CLIENT_NUMBER_WITH_COUNTRY_CODE
 ```
 
 Use digits only, including country code. The app then generates a direct `https://wa.me/<number>` link. Without this value, the app deliberately shows a configuration message and uses a generic share fallback; it does not invent a client phone number.

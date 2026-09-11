@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Cartcontext } from "../../Cartcontext.jsx";
 import { Productcontext } from "../../Productcontext.jsx";
+import { uniqueOptions } from "../../utils/collection.js";
 import "./ProductCatalog.css";
 
 const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
@@ -16,18 +17,18 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
   const [brand, setBrand] = useState("All");
   const [color, setColor] = useState("All");
   const [sort, setSort] = useState("featured");
-  const categories = [
-    "All",
-    ...new Set(productsData.map((product) => product.category)),
-  ];
-  const brands = [
-    "All",
-    ...new Set(productsData.map((product) => product.brand)),
-  ];
-  const colors = [
-    "All",
-    ...new Set(productsData.map((product) => product.colorFamily)),
-  ];
+  const categories = useMemo(
+    () => uniqueOptions(productsData, "category"),
+    [productsData],
+  );
+  const brands = useMemo(
+    () => uniqueOptions(productsData, "brand"),
+    [productsData],
+  );
+  const colors = useMemo(
+    () => uniqueOptions(productsData, "colorFamily"),
+    [productsData],
+  );
   const filteredProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
     const result = productsData.filter((product) => {

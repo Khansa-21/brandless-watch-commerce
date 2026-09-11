@@ -1,9 +1,16 @@
 .global-footer {
-  background: #eee9e1;
+  background: var(--surface);
   padding: 60px max(24px, calc((100% - 1180px) / 2)) 28px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
+}
+
+.global-footer,
+.global-footer a,
+.global-footer p,
+.global-footer small {
+  color: var(--ink);
 }
 .footer-brand {
   display: grid;
@@ -11,11 +18,11 @@
   gap: 10px;
 }
 .footer-brand p {
-  color: #777;
+  color: var(--muted);
   margin: 0 0 8px;
 }
 .footer-brand a {
-  color: #686963;
+  color: var(--muted);
   text-decoration: none;
   font:
     0.82rem Arial,
@@ -42,17 +49,50 @@
   letter-spacing: 0.1em;
 }
 .global-footer .footer-links a {
-  color: #666;
+  color: var(--muted);
   text-decoration: none;
   font-size: 0.9rem;
+}
+
+.disabled-support {
+  color: var(--muted);
+  font-size: 0.8rem;
 }
 .global-footer .footer-links a:hover {
   color: #b64c32;
 }
+.creator-signature {
+  display: grid;
+  align-content: end;
+  justify-items: start;
+  gap: 4px;
+  border-left: 1px solid var(--line);
+  padding-left: 28px;
+}
+.creator-signature span {
+  color: var(--accent);
+  font:
+    700 0.62rem Arial,
+    sans-serif;
+  letter-spacing: 0.16em;
+}
+.creator-signature strong {
+  color: var(--muted);
+  font:
+    0.76rem Arial,
+    sans-serif;
+  letter-spacing: 0.04em;
+}
+.creator-signature em {
+  color: var(--ink);
+  font:
+    italic 1.7rem Georgia,
+    serif;
+}
 .global-footer > small {
   grid-column: 1 / -1;
-  color: #888;
-  border-top: 1px solid #d8d0c7;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
   padding-top: 20px;
   font:
     0.7rem Arial,
@@ -68,5 +108,10 @@
   }
   .global-footer .footer-links {
     gap: 40px;
+  }
+  .creator-signature {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 22px 0 0;
   }
 }

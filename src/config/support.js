@@ -5,5 +5,5 @@ export const getWhatsAppUrl = (message = "Hello Brandless support") => {
   const encodedMessage = encodeURIComponent(message);
   return WHATSAPP_NUMBER
     ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`
-    : `https://wa.me/?text=${encodedMessage}`;
+    : "";
 };

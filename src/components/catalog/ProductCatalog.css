@@ -19,18 +19,18 @@
   letter-spacing: -0.03em;
 }
 .catalog-toolbar select {
-  border: 1px solid #d8d0c7;
+  border: 1px solid var(--line);
   background: transparent;
   padding: 12px;
-  color: #444;
+  color: var(--ink);
 }
 .catalog-controls {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   align-items: end;
-  border-top: 1px solid #ddd7ce;
-  border-bottom: 1px solid #ddd7ce;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   padding: 20px 0;
   margin-bottom: 28px;
   flex-wrap: wrap;
@@ -62,9 +62,9 @@
 }
 .filter-select-label select {
   min-width: 160px;
-  border: 1px solid #d8d0c7;
-  background: #f8f6f1;
-  color: #444;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
   padding: 9px;
 }
 .select-filters {
@@ -81,9 +81,9 @@
 }
 .select-filters select {
   min-width: 130px;
-  border: 1px solid #d8d0c7;
-  background: #f8f6f1;
-  color: #444;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
   padding: 9px;
 }
 .product-grid {
@@ -109,7 +109,7 @@
 .product-image-wrap {
   position: relative;
   aspect-ratio: 4 / 5;
-  background: #eee9e1;
+  background: var(--surface);
   overflow: hidden;
   border-radius: 16px 16px 0 0;
 }
@@ -126,8 +126,8 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #f8f6f1;
-  color: #444;
+  background: var(--surface);
+  color: var(--ink);
   padding: 6px 9px;
   font:
     700 0.65rem Arial,
@@ -199,15 +199,15 @@
 
 .add-button {
   display: grid;
-  grid-template-columns: 30px 1fr auto;
+  grid-template-columns: 30px 1fr;
   align-items: center;
   gap: 8px;
   width: 100%;
   padding: 11px 0;
   border: 0;
-  border-top: 1px solid #ddd7ce;
+  border-top: 1px solid var(--line);
   background: transparent;
-  color: #1d2824;
+  color: var(--ink);
   font-weight: 700;
   cursor: pointer;
   text-align: left;
@@ -236,30 +236,9 @@
   color: white;
 }
 
-.bag-label {
-  color: #999;
-  font:
-    0.65rem Arial,
-    sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.detail-link {
-  color: #1d2824;
-  text-decoration: none;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.detail-link:hover {
-  color: #b64c32;
-}
-
 .empty-results {
   padding: 36px 0;
-  color: #777;
+  color: var(--muted);
 }
 @keyframes reveal {
   from {
@@ -304,9 +283,6 @@
   .product-details {
     align-items: flex-start;
     flex-direction: column;
-  }
-  .bag-label {
-    display: none;
   }
   .product-actions {
     gap: 8px;

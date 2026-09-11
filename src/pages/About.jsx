@@ -62,6 +62,15 @@ const About = () => {
           </p>
         </article>
       </section>
+      <section className="maker-credit">
+        <p className="eyebrow">THE MAKER'S SIGNATURE</p>
+        <h2>Designed &amp; developed by</h2>
+        <p className="maker-name">Khansa Ehsan</p>
+        <p>
+          An independent digital storefront shaped with intention, from the
+          first interaction to the final detail.
+        </p>
+      </section>
     </main>
   );
 };

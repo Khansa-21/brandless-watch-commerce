@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Cartcontext } from "../../Cartcontext.jsx";
+import { useTheme } from "../../Themecontext.jsx";
 import "./Header.css";
 
 const navItems = [
@@ -12,6 +13,7 @@ const navItems = [
 
 const Header = () => {
   const { itemCount } = useContext(Cartcontext);
+  const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
@@ -75,6 +77,14 @@ const Header = () => {
           >
             Shop watches
           </NavLink>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+          >
+            {theme === "light" ? "Night" : "Day"}
+          </button>
         </nav>
       </div>
     </header>

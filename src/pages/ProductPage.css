@@ -1,6 +1,7 @@
 .product-detail-page {
   min-height: 60vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -13,7 +14,7 @@
 }
 
 .product-detail-image-wrap {
-  background: #eee9e1;
+  background: var(--surface);
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 18px;
@@ -40,21 +41,44 @@
 }
 
 .product-detail-meta {
-  color: #666;
+  color: var(--muted);
   margin: 0;
 }
 
 .product-detail-price {
   font-size: clamp(1.7rem, 3vw, 2.4rem);
   font-weight: 700;
-  color: #b64c32;
+  color: var(--accent);
   margin: 0;
 }
 
 .product-detail-description {
   line-height: 1.7;
-  color: #4d4d4d;
+  color: var(--muted);
   margin: 0;
+}
+
+.product-highlights {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 4px;
+  border-top: 1px solid var(--line);
+}
+
+.product-highlights div {
+  display: grid;
+  gap: 2px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.product-highlights strong {
+  font-size: 0.82rem;
+}
+
+.product-highlights span {
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
 .product-detail-actions {
@@ -70,22 +94,70 @@
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  border: 1px solid #1d2824;
+  border: 1px solid var(--ink);
   text-decoration: none;
   padding: 0 20px;
   font-weight: 700;
   transition: all 0.2s ease;
 }
 
+.recommendation-section {
+  width: 100%;
+  margin-top: 90px;
+  padding-top: 34px;
+  border-top: 1px solid var(--line);
+}
+
+.recommendation-heading h3 {
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.recommendation-card {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.recommendation-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.recommendation-card span {
+  font-weight: 700;
+}
+
+.recommendation-card strong {
+  color: var(--accent);
+}
+
+.recommendation-card {
+  transition: transform 0.25s ease;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-4px);
+}
+
 .product-detail-actions button {
-  background: #1d2824;
-  color: #fff;
+  background: var(--ink);
+  color: var(--page-bg);
   border: none;
   cursor: pointer;
 }
 
 .product-detail-actions a {
-  color: #1d2824;
+  color: var(--ink);
   background: transparent;
 }
 
@@ -95,6 +167,12 @@
 }
 
 @media (max-width: 760px) {
+  .product-detail-page {
+    align-items: stretch;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
   .product-detail-layout {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -115,5 +193,16 @@
   .product-detail-actions button,
   .product-detail-actions a {
     width: 100%;
+  }
+
+  .recommendation-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .recommendation-grid {
+    grid-template-columns: 1fr;
   }
 }

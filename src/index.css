@@ -10,9 +10,86 @@ html {
 }
 
 body {
-  background: #f8f6f1;
-  color: #1d2824;
+  background: var(--page-bg);
+  color: var(--ink);
   line-height: 1.5;
+}
+
+:root {
+  --page-bg: #f8f6f1;
+  --surface: #eee9e1;
+  --surface-strong: #e2ddd4;
+  --ink: #1d2824;
+  --muted: #686963;
+  --line: #d8d0c7;
+  --accent: #b64c32;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #17201e;
+  --surface: #222d29;
+  --surface-strong: #2b3833;
+  --ink: #f5f1e9;
+  --muted: #b7beb5;
+  --line: #43514b;
+  --accent: #e49a7f;
+  color-scheme: dark;
+}
+
+:root[data-theme="dark"] .site-header,
+:root[data-theme="dark"] .global-footer,
+:root[data-theme="dark"] .checkout-summary,
+:root[data-theme="dark"] .product-image-wrap,
+:root[data-theme="dark"] .product-detail-image-wrap {
+  background: var(--surface);
+}
+
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] textarea {
+  background: var(--surface-strong);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+:root[data-theme="dark"] .nav-link,
+:root[data-theme="dark"] .brand,
+:root[data-theme="dark"] .product-name,
+:root[data-theme="dark"] .product-detail-copy h2,
+:root[data-theme="dark"] .product-detail-actions a,
+:root[data-theme="dark"] .add-button {
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .catalog-toolbar select,
+:root[data-theme="dark"] .filter-select-label select,
+:root[data-theme="dark"] .select-filters select,
+:root[data-theme="dark"] .product-category,
+:root[data-theme="dark"] .cart-product,
+:root[data-theme="dark"] .quantity-control button,
+:root[data-theme="dark"] .confirmation-summary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+:root[data-theme="dark"] .cart-product:hover {
+  background: var(--surface-strong);
+}
+
+:root[data-theme="dark"] .menu-toggle span {
+  background: var(--ink);
+}
+
+:root[data-theme="dark"] .product-meta,
+:root[data-theme="dark"] .product-color,
+:root[data-theme="dark"] .product-detail-meta,
+:root[data-theme="dark"] .product-detail-description,
+:root[data-theme="dark"] .empty-results,
+:root[data-theme="dark"] label,
+:root[data-theme="dark"] .payment-option {
+  color: var(--muted);
 }
 
 img {
@@ -25,6 +102,28 @@ input,
 select,
 a {
   transition: all 0.2s ease;
+}
+
+button:not(:disabled),
+a,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:not(:disabled):hover,
+a:hover,
+[role="button"]:hover {
+  filter: brightness(1.04);
+}
+
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .app-shell {

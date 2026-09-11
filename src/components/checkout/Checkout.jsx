@@ -4,7 +4,8 @@ import { Cartcontext } from "../../Cartcontext.jsx";
 import Orderconfirm from "../Orderconfirm.jsx";
 import "./Checkout.css";
 
-import { getWhatsAppUrl } from "../../config/support.js";
+import { getWhatsAppUrl, WHATSAPP_NUMBER } from "../../config/support.js";
+import { getOrderTotals } from "../../config/pricing.js";
 const Checkout = () => {
   const { cartItems, cartTotal, clearCart, showToast } =
     useContext(Cartcontext);
@@ -12,6 +13,7 @@ const Checkout = () => {
   const [order, setOrder] = useState(null);
   const [confirmedItems, setConfirmedItems] = useState([]);
   const [confirmedTotal, setConfirmedTotal] = useState(0);
+  const [confirmedPricing, setConfirmedPricing] = useState(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -24,6 +26,7 @@ const Checkout = () => {
     postalCode: "",
     payment: "COD",
   });
+  const totals = getOrderTotals(cartTotal);
   const cities = [
     "Lahore",
     "Karachi",
@@ -61,21 +64,21 @@ const Checkout = () => {
     }));
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (form.payment === "WhatsApp") {
+      const items = cartItems
+        .map((item) => `${item.name} x${item.quantity}`)
+        .join(", ");
+      const message = `Hello BRANDLESS, I want to place an order for ${items}. Subtotal: $${totals.subtotal.toFixed(2)}. Shipping: $${totals.shipping.toFixed(2)}. Tax: $${totals.tax.toFixed(2)}. Total: $${totals.total.toFixed(2)}. Name: ${form.name}. Phone: ${form.phone}. Address: ${form.address}, ${form.apartment}, ${form.city}, ${form.district}, ${form.state}, ${form.postalCode}.`;
+      window.open(getWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+    }
     const orderItemsSnapshot = cartItems.map((item) => ({ ...item }));
     setConfirmedItems(orderItemsSnapshot);
-    setConfirmedTotal(cartTotal);
+    setConfirmedTotal(totals.total);
+    setConfirmedPricing(totals);
     setOrder(form);
     clearCart();
     showToast("Order placed successfully");
   };
-  const whatsappOrder = () => {
-    const items = cartItems
-      .map((item) => `${item.name} x${item.quantity}`)
-      .join(", ");
-    const message = `Hello BRANDLESS, I want to place an order for ${items}. Total: $${cartTotal.toFixed(2)}. Name: ${form.name}. Phone: ${form.phone}. Address: ${form.address}, ${form.apartment}, ${form.city}, ${form.district}, ${form.state}, ${form.postalCode}.`;
-    window.open(getWhatsAppUrl(message), "_blank", "noopener,noreferrer");
-  };
-
   if (order)
     return (
       <Orderconfirm
@@ -88,10 +91,12 @@ const Checkout = () => {
         payment={order.payment === "COD" ? "Cash on Delivery" : "WhatsApp"}
         items={confirmedItems}
         total={confirmedTotal}
+        pricing={confirmedPricing}
         onClose={() => {
           clearCart();
           setConfirmedItems([]);
           setConfirmedTotal(0);
+          setConfirmedPricing(null);
           setOrder(null);
           navigate("/");
         }}
@@ -243,16 +248,19 @@ const Checkout = () => {
               </label>
             </fieldset>
             <div className="checkout-actions">
-              <button className="primary-action" type="submit">
-                Place order
-              </button>
-              {form.payment === "WhatsApp" && (
+              {form.payment === "WhatsApp" ? (
                 <button
                   className="whatsapp-action"
-                  type="button"
-                  onClick={whatsappOrder}
+                  type="submit"
+                  disabled={!WHATSAPP_NUMBER}
                 >
-                  Send on WhatsApp
+                  {WHATSAPP_NUMBER
+                    ? "Send order on WhatsApp"
+                    : "WhatsApp unavailable"}
+                </button>
+              ) : (
+                <button className="primary-action" type="submit">
+                  Place order
                 </button>
               )}
             </div>
@@ -269,8 +277,22 @@ const Checkout = () => {
             </div>
           ))}
           <div className="summary-total">
-            <span>Total</span>
-            <strong>${cartTotal.toFixed(2)}</strong>
+            <div>
+              <span>Subtotal</span>
+              <strong>${totals.subtotal.toFixed(2)}</strong>
+            </div>
+            <div>
+              <span>Shipping</span>
+              <strong>${totals.shipping.toFixed(2)}</strong>
+            </div>
+            <div>
+              <span>Tax</span>
+              <strong>${totals.tax.toFixed(2)}</strong>
+            </div>
+            <div className="summary-grand-total">
+              <span>Total</span>
+              <strong>${totals.total.toFixed(2)}</strong>
+            </div>
           </div>
         </aside>
       </main>

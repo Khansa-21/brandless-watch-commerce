@@ -18,9 +18,13 @@ const Footer = () => {
         </Link>
         <p>Time, considered.</p>
         <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
-        <a href={whatsappHref} target="_blank" rel="noreferrer">
-          WhatsApp support {WHATSAPP_NUMBER ? "↗" : "(configure number)"}
-        </a>
+        {WHATSAPP_NUMBER ? (
+          <a href={whatsappHref} target="_blank" rel="noreferrer">
+            WhatsApp support ↗
+          </a>
+        ) : (
+          <span className="disabled-support">WhatsApp support unavailable</span>
+        )}
       </div>
       <div className="footer-links">
         <div>
@@ -35,6 +39,11 @@ const Footer = () => {
           <Link to="/privacy">Privacy policy</Link>
           <Link to="/terms">Terms & conditions</Link>
         </div>
+      </div>
+      <div className="creator-signature" aria-label="Project creator">
+        <span>THE MAKER'S SIGNATURE</span>
+        <strong>Designed &amp; developed by</strong>
+        <em>Khansa Ehsan</em>
       </div>
       <small>© 2026 Brandless Studio. All rights reserved.</small>
     </footer>

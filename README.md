@@ -1,22 +1,34 @@
 # Brandless Watches
 
-**Suggested repository name:** `brandless-watch-commerce`
+> A considered React storefront for watches and everyday timepieces, designed and developed by **Khansa Ehsan**.
 
-**GitHub description:** A polished React/Vite watch-commerce frontend with real product imagery, smart catalog filters, persistent cart, responsive checkout, COD confirmation, and WhatsApp support handoff.
+![Brandless storefront homepage](public/brandless-homepage.png)
 
-Brandless is a frontend ecommerce project for a watch and everyday-timepieces store. It demonstrates the shopping experience a client would expect before a backend is connected: discovery, search, filters, cart persistence, checkout, order confirmation, and support handoffs.
+Brandless is a frontend ecommerce showcase built with React and Vite. It demonstrates a complete shopping journey before a backend is connected: product discovery, filtering, product details, persistent cart behavior, responsive checkout, order confirmation, theme switching, and support handoffs.
 
-## Why this project is different
+## The project idea
 
-Choosing a watch online is often difficult because shoppers have to compare scattered details such as movement type, color, style, and intended use. Brandless addresses that real-world problem with a focused catalog, meaningful product metadata, category/brand/color filters, price sorting, clear product cards, and a checkout flow that keeps the purchase context visible.
+This project intentionally proves that strong product experiences do not require an oversized stack. It uses:
 
-The project is intentionally watch-first: classic watches, luxury pieces, chronographs, smartwatches, digital watches, automatic watches, jewelry watches, and supporting accessories are all organized as one coherent collection.
+- Plain CSS instead of Tailwind
+- React Context instead of Redux
+- LocalStorage instead of a database for the demo cart
+- Native browser validation instead of a form library
+- Small, focused components instead of unnecessary abstraction
 
-## Frontend-only projects are valid
+That simplicity is the point. Good architecture comes from clear ownership, reusable patterns, accessible interactions, and disciplined visual decisions, not from adding tools for their own sake. Brandless is a practical example of how a focused frontend can still feel polished, premium, and production-minded.
 
-Yes. A frontend-only ecommerce app is a legitimate portfolio and client-demo project. It proves layout, responsive design, information architecture, interaction design, product discovery, cart behavior, form UX, accessibility basics, and integration points without exposing real credentials or pretending a payment system is live.
+## Highlights
 
-This project currently uses LocalStorage for the cart and native browser form validation. It does not persist orders to a server, charge cards, send email from a server, or manage inventory. Those are the next production integrations.
+- Editorial luxury storefront with responsive mobile layouts
+- Product catalog with search, category, brand, color, and price filters
+- Product detail pages with recommendations and purchase information
+- Cart quantity merging and LocalStorage persistence
+- COD checkout with shipping, tax, subtotal, and final total breakdown
+- WhatsApp order handoff with a prefilled order message
+- Persistent light/dark theme with responsive hover and focus states
+- Confirmation flow preserving the purchased order snapshot
+- Contact, shipping, privacy, terms, and creator-credit pages
 
 ## Run locally
 
@@ -25,53 +37,65 @@ npm install
 npm run dev
 ```
 
-The production checks are:
+Production checks:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-## WhatsApp support setup
+## Optional WhatsApp setup
 
-The UI supports two WhatsApp use cases:
+WhatsApp is an optional browser handoff, not a backend integration. When configured, it supports:
 
-1. Checkout creates a prefilled order message containing the products, quantities, customer details, address, and total.
-2. The global footer and Contact page expose a support chat link.
+1. A prefilled checkout message containing products, customer details, address, and totals.
+2. Direct support links in the footer and Contact page.
 
-For a client deployment, the client provides their WhatsApp Business number in international format. Create a local `.env` file from `.env.example`:
+Create a local `.env` file from `.env.example`:
 
 ```env
-VITE_WHATSAPP_NUMBER=CLIENT_NUMBER_WITH_COUNTRY_CODE
+VITE_WHATSAPP_NUMBER=923001234567
 ```
 
-Use digits only, including country code. The app then generates a direct `https://wa.me/<number>` link. Without this value, the app deliberately shows a configuration message and uses a generic share fallback; it does not invent a client phone number.
+Use digits only with the country code. The number is public client configuration, so use a business number rather than a private secret. Without it, WhatsApp actions remain unavailable instead of opening a broken generic link.
 
-Important: this is a browser handoff, not a WhatsApp backend or WhatsApp Business API integration. A production system that records conversations, sends automated messages, or handles agent routing needs a secure server and the official WhatsApp Business Platform. Never place access tokens in the React app.
+Do not commit `.env`. It is ignored by Git; `.env.example` is the safe template to share.
 
 ## Email support
 
-The Contact form validates its fields and opens a prefilled `mailto:` draft to `hello@brandless.studio`. That works through the visitor's installed/default mail client. Reliable server-side delivery, ticket creation, autoresponders, and delivery tracking require a backend email provider.
+The Contact form validates its fields and opens a prefilled `mailto:` draft. Reliable delivery, ticket creation, autoresponders, and tracking require a backend email provider.
 
 ## Data flow
 
 - `src/data/products.json` is the catalog source.
-- `ProductProvider` exposes products to the UI.
-- `ProductCatalog` derives search, category, brand, color, and price-sort results.
-- `Cartcontext` merges duplicate items and persists the cart in LocalStorage.
-- Checkout reads cart state, validates shipping data, and creates COD confirmation or a WhatsApp order message.
+- `Productcontext` exposes catalog data through React Context.
+- `ProductCatalog` derives filtered and sorted product views.
+- `Cartcontext` owns cart mutations, derived totals, persistence, and toast state.
+- `Themecontext` owns the persisted light/dark preference.
+- `src/config/pricing.js` centralizes shipping, tax, and order totals.
 - `src/config/support.js` centralizes support email and WhatsApp URL generation.
+- Checkout snapshots the order before clearing the cart for confirmation.
 
 ## Project structure
 
-- `src/Home.jsx`: editorial storefront homepage
-- `src/components/catalog/`: product grid and filters
-- `src/components/cart/`: persistent cart interface
-- `src/components/checkout/`: shipping form and order summary
-- `src/components/footer/`: global footer and support links
-- `src/pages/`: About, Contact, Privacy, and Terms
-- `public/`: local product photography
+```text
+src/
+	components/
+		catalog/       Product grid, filters, and add-to-cart action
+		cart/          Persistent cart interface
+		checkout/      Shipping form and order summary
+		footer/        Global links and creator signature
+		header/        Responsive navigation and theme toggle
+		ui/            Toast feedback
+	config/          Pricing and support configuration
+	data/            Demo catalog data
+	pages/           Product, About, Contact, and legal views
+	App.jsx          Routes and provider composition
+public/             Product imagery and project screenshot
+```
 
-## Next production phase
+## Frontend scope
 
-Add a backend for order records, inventory, authentication, admin catalog management, transactional email, shipping-rate calculation, payment processing, and official WhatsApp Business API messaging. Replace demo product copy/prices with verified client inventory and confirm image usage rights before launch.
+This is a frontend showcase, not a live commerce backend. It does not persist orders on a server, process card payments, manage inventory, authenticate users, or send server-side email. A production phase would add secure order storage, inventory, authentication, payment processing, shipping-rate calculation, transactional email, and official WhatsApp Business API messaging.
+
+Before launch, replace demo catalog content with verified inventory and confirm image usage rights.

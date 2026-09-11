@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 20;
-  background: rgba(248, 246, 241, 0.94);
+  background: color-mix(in srgb, var(--page-bg) 94%, transparent);
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 rgba(29, 40, 36, 0.08);
 }
@@ -18,7 +18,7 @@
 }
 
 .brand {
-  color: #171717;
+  color: var(--ink);
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -26,7 +26,7 @@
 }
 
 .brand span {
-  color: #ce5a3a;
+  color: var(--accent);
 }
 
 .tabs {
@@ -40,7 +40,7 @@
   position: relative;
   text-decoration: none;
   padding: 8px 12px;
-  color: #5c5a55;
+  color: var(--muted);
   font-weight: 600;
   border-radius: 999px;
   transition: all 0.2s ease;
@@ -48,7 +48,12 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: #ce5a3a;
+  color: var(--accent);
+}
+
+.nav-link:hover {
+  background: var(--accent);
+  color: #17201e;
 }
 
 .cart-link {
@@ -60,17 +65,37 @@
 }
 
 .nav-cta {
-  border: 1px solid #1d2824;
-  margin-left: 8px;
+  border: 1px solid var(--ink);
+  margin-left: 6px;
   border-radius: 0;
   background: transparent;
+  padding: 6px 9px;
+  font-size: 0.75rem;
 }
 
 .nav-cta:hover,
 .nav-cta.active {
-  background: #1d2824;
-  color: white;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #17201e;
   box-shadow: 0 10px 22px rgba(29, 40, 36, 0.12);
+}
+
+.theme-toggle {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.theme-toggle:hover {
+  background: var(--ink);
+  color: var(--page-bg);
 }
 
 .count-cart {
@@ -94,7 +119,7 @@
   display: none;
   width: 42px;
   height: 42px;
-  border: 1px solid rgba(29, 40, 36, 0.2);
+  border: 1px solid var(--line);
   background: transparent;
   border-radius: 8px;
   padding: 10px 9px;
@@ -105,7 +130,7 @@
   display: block;
   width: 100%;
   height: 2px;
-  background: #1d2824;
+  background: var(--ink);
   margin: 5px 0;
   border-radius: 999px;
 }
@@ -128,7 +153,7 @@
     align-items: stretch;
     gap: 8px;
     padding-top: 14px;
-    border-top: 1px solid rgba(29, 40, 36, 0.12);
+    border-top: 1px solid var(--line);
     margin-top: 10px;
   }
 
@@ -141,6 +166,11 @@
     width: 100%;
     padding: 10px 12px;
     font-size: 0.82rem;
+  }
+
+  .theme-toggle {
+    width: 100%;
+    text-align: left;
   }
 
   .nav-cta {

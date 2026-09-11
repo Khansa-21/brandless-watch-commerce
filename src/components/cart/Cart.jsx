@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import "./Cart.css";
 import { Cartcontext } from "../../Cartcontext.jsx";
 import { useNavigate } from "react-router-dom";
+import { getOrderTotals } from "../../config/pricing.js";
 
 const Cart = () => {
   const { cartItems, removeItemFromCart, increment, decrement, cartTotal } =
     useContext(Cartcontext);
   const navigate = useNavigate();
+  const totals = getOrderTotals(cartTotal);
   return (
     <main className="cart-page">
       <div className="page-heading">
@@ -57,7 +59,8 @@ const Cart = () => {
           </div>
           <div className="cart-summary">
             <span>Subtotal</span>
-            <strong>${cartTotal.toFixed(2)}</strong>
+            <strong>${totals.subtotal.toFixed(2)}</strong>
+            <span>Shipping + tax calculated at checkout</span>
             <button id="btun" onClick={() => navigate("/checkout")}>
               Checkout
             </button>

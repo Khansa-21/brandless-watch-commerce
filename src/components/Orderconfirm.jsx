@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Cartcontext } from "../Cartcontext.jsx";
 import image from "../assets/confirm.png";
+import { getOrderTotals } from "../config/pricing.js";
 import "./Orderconfirm.css";
 
 const Orderconfirm = ({
@@ -15,17 +16,15 @@ const Orderconfirm = ({
   onClose,
   items = [],
   total = 0,
+  pricing,
 }) => {
   const { cartItems } = useContext(Cartcontext);
   const displayItems = items.length ? items : cartItems;
-  const subtotal =
-    total ||
-    displayItems.reduce(
-      (sum, item) => sum + Number(item.price) * Number(item.quantity),
-      0,
-    );
-  const shipping = 8;
-  const taxes = 4;
+  const calculatedSubtotal = displayItems.reduce(
+    (sum, item) => sum + Number(item.price) * Number(item.quantity),
+    0,
+  );
+  const totals = pricing || getOrderTotals(total || calculatedSubtotal);
   return (
     <section
       className="confirmation-sheet"
@@ -104,19 +103,19 @@ const Orderconfirm = ({
         <div className="confirmation-totals">
           <div>
             <span>Subtotal</span>
-            <strong>${subtotal.toFixed(2)}</strong>
+            <strong>${totals.subtotal.toFixed(2)}</strong>
           </div>
           <div>
             <span>Shipping</span>
-            <strong>${shipping.toFixed(2)}</strong>
+            <strong>${totals.shipping.toFixed(2)}</strong>
           </div>
           <div>
             <span>Taxes</span>
-            <strong>${taxes.toFixed(2)}</strong>
+            <strong>${totals.tax.toFixed(2)}</strong>
           </div>
           <div className="grand-total">
             <span>Total</span>
-            <strong>${(subtotal + shipping + taxes).toFixed(2)}</strong>
+            <strong>${totals.total.toFixed(2)}</strong>
           </div>
         </div>
       </aside>

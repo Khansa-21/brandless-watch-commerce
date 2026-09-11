@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Cartcontext } from "../../Cartcontext.jsx";
 import { Productcontext } from "../../Productcontext.jsx";
 import "./ProductCatalog.css";
@@ -102,38 +102,36 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
               ))}
             </select>
           </label>
-          {!featured && (
-            <div className="select-filters">
-              <label>
-                Brand
-                <select
-                  value={brand}
-                  onChange={(event) => setBrand(event.target.value)}
-                >
-                  <option value="All">All brands</option>
-                  {brands.slice(1).map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Color
-                <select
-                  value={color}
-                  onChange={(event) => setColor(event.target.value)}
-                >
-                  <option value="All">All colors</option>
-                  {colors.slice(1).map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          )}
+          <div className="select-filters">
+            <label>
+              Brand
+              <select
+                value={brand}
+                onChange={(event) => setBrand(event.target.value)}
+              >
+                <option value="All">All brands</option>
+                {brands.slice(1).map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Color
+              <select
+                value={color}
+                onChange={(event) => setColor(event.target.value)}
+              >
+                <option value="All">All colors</option>
+                {colors.slice(1).map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
         </div>
       )}
       <div className="product-grid" aria-live="polite">
@@ -182,15 +180,7 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
                   ↗
                 </span>
                 <span>Add to bag</span>
-                <span className="bag-label">Add piece</span>
               </button>
-              <Link
-                className="detail-link"
-                to={`/product/${product.id}`}
-                onClick={(event) => event.stopPropagation()}
-              >
-                View details
-              </Link>
             </div>
           </article>
         ))}

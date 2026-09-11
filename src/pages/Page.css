@@ -67,6 +67,31 @@
 .values-grid article:last-child {
   border: 0;
 }
+.maker-credit {
+  margin-top: 100px;
+  padding: 58px 0 12px;
+  border-top: 1px solid var(--line);
+  max-width: 650px;
+}
+.maker-credit h2 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.95;
+  color: var(--ink);
+}
+.maker-name {
+  margin: 10px 0 18px;
+  color: var(--accent);
+  font:
+    italic clamp(2.4rem, 6vw, 5rem) Georgia,
+    serif;
+  line-height: 0.95;
+}
+.maker-credit > p:last-child {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 420px;
+}
 .values-grid strong {
   color: #b64c32;
   font:

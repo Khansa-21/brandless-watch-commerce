@@ -76,11 +76,15 @@ const Contact = () => {
       </section>
       <div>
         <span className="section-index">WHATSAPP</span>
-        <a href={getWhatsAppUrl()} target="_blank" rel="noreferrer">
-          {WHATSAPP_NUMBER
-            ? "Chat with support ↗"
-            : "Set VITE_WHATSAPP_NUMBER to enable direct chat"}
-        </a>
+        {WHATSAPP_NUMBER ? (
+          <a href={getWhatsAppUrl()} target="_blank" rel="noreferrer">
+            Chat with support ↗
+          </a>
+        ) : (
+          <span className="disabled-support">
+            Direct WhatsApp chat is currently unavailable.
+          </span>
+        )}
       </div>
     </main>
   );

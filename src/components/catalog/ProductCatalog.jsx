@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Cartcontext } from "../../Cartcontext.jsx";
 import { Productcontext } from "../../Productcontext.jsx";
 import "./ProductCatalog.css";
@@ -7,6 +7,7 @@ import "./ProductCatalog.css";
 const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
   const { productsData } = useContext(Productcontext);
   const { addToCart } = useContext(Cartcontext);
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
   const [category, setCategory] = useState(
@@ -137,7 +138,19 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
       )}
       <div className="product-grid" aria-live="polite">
         {visibleProducts.map((product) => (
-          <article className="product-card" key={product.id}>
+          <article
+            className="product-card"
+            key={product.id}
+            onClick={() => navigate(`/product/${product.id}`)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                navigate(`/product/${product.id}`);
+              }
+            }}
+          >
             <div className="product-image-wrap">
               <img src={`/${product.image}`} alt={product.name} />
               <span className="product-category">{product.category}</span>
@@ -157,13 +170,28 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
               </div>
               <strong>${product.price}</strong>
             </div>
-            <button className="add-button" onClick={() => addToCart(product)}>
-              <span className="bag-icon" aria-hidden="true">
-                ↗
-              </span>
-              <span>Add to bag</span>
-              <span className="bag-label">Add piece</span>
-            </button>
+            <div className="product-actions">
+              <button
+                className="add-button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  addToCart(product);
+                }}
+              >
+                <span className="bag-icon" aria-hidden="true">
+                  ↗
+                </span>
+                <span>Add to bag</span>
+                <span className="bag-label">Add piece</span>
+              </button>
+              <Link
+                className="detail-link"
+                to={`/product/${product.id}`}
+                onClick={(event) => event.stopPropagation()}
+              >
+                View details
+              </Link>
+            </div>
           </article>
         ))}
       </div>

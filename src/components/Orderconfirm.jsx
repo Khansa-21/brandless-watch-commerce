@@ -13,12 +13,17 @@ const Orderconfirm = ({
   payment,
   apt,
   onClose,
+  items = [],
+  total = 0,
 }) => {
   const { cartItems } = useContext(Cartcontext);
-  const subtotal = cartItems.reduce(
-    (total, item) => total + Number(item.price) * Number(item.quantity),
-    0,
-  );
+  const displayItems = items.length ? items : cartItems;
+  const subtotal =
+    total ||
+    displayItems.reduce(
+      (sum, item) => sum + Number(item.price) * Number(item.quantity),
+      0,
+    );
   const shipping = 8;
   const taxes = 4;
   return (
@@ -82,7 +87,7 @@ const Orderconfirm = ({
       <aside className="confirmation-summary">
         <p className="eyebrow">ORDER SUMMARY</p>
         <div className="confirmation-items">
-          {cartItems.map((item) => (
+          {displayItems.map((item) => (
             <div className="confirmation-item" key={item.id}>
               <div className="confirmation-product">
                 <img src={`/${item.image}`} alt={item.name} />

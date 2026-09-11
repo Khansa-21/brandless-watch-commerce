@@ -1,47 +1,80 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { Cartcontext } from "../../Cartcontext";
+import React, { useContext, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { Cartcontext } from "../../Cartcontext.jsx";
 import "./Header.css";
+
+const navItems = [
+  { label: "Home", to: "/" },
+  { label: "Shipping", to: "/shipping" },
+  { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
+];
+
 const Header = () => {
   const { itemCount } = useContext(Cartcontext);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <header className="site-header">
       <div className="navbar">
-        <Link className="brand" to="/">
+        <Link className="brand" to="/" onClick={closeMenu}>
           BRANDLESS<span>.</span>
         </Link>
-        <nav className="tabs" aria-label="Primary navigation">
-          <li>
-            <Link className="nav-link" to="/">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link" to="/shipping">
-              Shipping
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link" to="/about">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link" to="/contact">
-              Contact
-            </Link>
-          </li>
-          <li>
-            <span className="count-cart">{itemCount}</span>
-            <Link className="nav-link" to="/cart">
-              Cart
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link nav-cta" to="/shipping">
-              Shop watches
-            </Link>
-          </li>
+
+        <button
+          type="button"
+          className="menu-toggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <nav
+          className={`tabs ${menuOpen ? "open" : ""}`}
+          aria-label="Primary navigation"
+        >
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+              onClick={closeMenu}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+
+          <NavLink
+            className={({ isActive }) =>
+              `nav-link cart-link ${isActive ? "active" : ""}`
+            }
+            to="/cart"
+            onClick={closeMenu}
+          >
+            <span
+              className="count-cart"
+              aria-label={`${itemCount} items in cart`}
+            >
+              {itemCount}
+            </span>
+            Cart
+          </NavLink>
+
+          <NavLink
+            className="nav-link nav-cta"
+            to="/shipping"
+            onClick={closeMenu}
+          >
+            Shop watches
+          </NavLink>
         </nav>
       </div>
     </header>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Brandless favicon">
+  <rect width="64" height="64" rx="16" fill="#1d2824"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#f8f6f1" stroke-width="2.5"/>
+  <path d="M32 12v20L45 40" stroke="#ce5a3a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32" cy="32" r="3" fill="#f8f6f1"/>
+</svg>

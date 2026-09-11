@@ -6,11 +6,13 @@ import Header from "./components/header/Header.jsx";
 import Home from "./Home.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
+import ProductPage from "./pages/ProductPage.jsx";
 import { Privacy, Terms } from "./pages/Legal.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./Cartcontext.jsx";
 import { ProductProvider } from "./Productcontext.jsx";
 import Footer from "./components/footer/Footer.jsx";
+
 const App = () => {
   return (
     <div className="app-shell">
@@ -21,6 +23,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/shipping" element={<Ship />} />
+              <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<Privacy />} />
@@ -35,5 +38,5 @@ const App = () => {
     </div>
   );
 };
-// {"id":1, "image": "product.jpg", "description": "Blue Men's Hoodie in elegant cool fabric"}
+
 export default App;

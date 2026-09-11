@@ -1,21 +1,36 @@
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: #f8f6f1;
   color: #1d2824;
+  line-height: 1.5;
 }
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+a {
+  transition: all 0.2s ease;
+}
+
 .app-shell {
   padding-top: 82px;
 }
-button,
-input,
-select {
-  font: inherit;
-}
+
 h1,
 h2,
 h3,
@@ -23,6 +38,7 @@ h4,
 .brand {
   font-family: Georgia, "Times New Roman", serif;
 }
+
 h1,
 h2,
 h3,
@@ -30,9 +46,11 @@ h4,
 p {
   text-wrap: balance;
 }
+
 .tabs {
   font-family: Arial, sans-serif;
 }
+
 @media (max-width: 760px) {
   .app-shell {
     padding-top: 106px;

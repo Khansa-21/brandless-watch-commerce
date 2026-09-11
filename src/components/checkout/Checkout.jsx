@@ -6,9 +6,12 @@ import "./Checkout.css";
 
 import { getWhatsAppUrl } from "../../config/support.js";
 const Checkout = () => {
-  const { cartItems, cartTotal, clearCart } = useContext(Cartcontext);
+  const { cartItems, cartTotal, clearCart, showToast } =
+    useContext(Cartcontext);
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
+  const [confirmedItems, setConfirmedItems] = useState([]);
+  const [confirmedTotal, setConfirmedTotal] = useState(0);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -58,7 +61,12 @@ const Checkout = () => {
     }));
   const handleSubmit = (event) => {
     event.preventDefault();
+    const orderItemsSnapshot = cartItems.map((item) => ({ ...item }));
+    setConfirmedItems(orderItemsSnapshot);
+    setConfirmedTotal(cartTotal);
     setOrder(form);
+    clearCart();
+    showToast("Order placed successfully");
   };
   const whatsappOrder = () => {
     const items = cartItems
@@ -68,13 +76,6 @@ const Checkout = () => {
     window.open(getWhatsAppUrl(message), "_blank", "noopener,noreferrer");
   };
 
-  if (cartItems.length === 0)
-    return (
-      <main className="checkout-empty">
-        <h1>Your cart is empty</h1>
-        <button onClick={() => navigate("/shipping")}>Browse products</button>
-      </main>
-    );
   if (order)
     return (
       <Orderconfirm
@@ -85,12 +86,24 @@ const Checkout = () => {
         district={order.district}
         state={order.state}
         payment={order.payment === "COD" ? "Cash on Delivery" : "WhatsApp"}
+        items={confirmedItems}
+        total={confirmedTotal}
         onClose={() => {
           clearCart();
+          setConfirmedItems([]);
+          setConfirmedTotal(0);
           setOrder(null);
           navigate("/");
         }}
       />
+    );
+
+  if (cartItems.length === 0)
+    return (
+      <main className="checkout-empty">
+        <h1>Your cart is empty</h1>
+        <button onClick={() => navigate("/shipping")}>Browse products</button>
+      </main>
     );
   return (
     <>

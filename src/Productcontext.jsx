@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext } from "react";
-import productsData from "../src/data/products.json"; 
+import productsData from "../src/data/products.json";
 // context create
 export const Productcontext = createContext();
 // provider component

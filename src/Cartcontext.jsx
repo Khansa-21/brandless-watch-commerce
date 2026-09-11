@@ -1,5 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useEffect, useMemo, useState } from "react";
+import Toast from "./components/ui/Toast.jsx";
+
 export const Cartcontext = createContext();
+
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
     try {
@@ -9,10 +13,26 @@ export function CartProvider({ children }) {
       return [];
     }
   });
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     localStorage.setItem("brandless-cart", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    if (!toastMessage) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setToastMessage("");
+    }, 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [toastMessage]);
+
+  const showToast = (message) => {
+    if (!message) return;
+    setToastMessage(message);
+  };
 
   const addToCart = (product) => {
     setCartItems((previousItems) => {
@@ -24,17 +44,28 @@ export function CartProvider({ children }) {
             : item,
         );
       }
+
       return [
         ...previousItems,
         { ...product, quantity: Number(product.quantity || 1) },
       ];
     });
+
+    showToast(`${product.name} added to cart`);
   };
+
   const clearCart = () => {
     setCartItems([]);
+    try {
+      localStorage.setItem("brandless-cart", JSON.stringify([]));
+    } catch {
+      // ignore storage access errors
+    }
   };
   const removeItemFromCart = (productId) => {
-    setCartItems(cartItems.filter((item) => item.id !== productId));
+    setCartItems((previousItems) =>
+      previousItems.filter((item) => item.id !== productId),
+    );
   };
   const increment = (productId) => {
     setCartItems((prevItems) =>
@@ -79,9 +110,12 @@ export function CartProvider({ children }) {
         clearCart,
         itemCount,
         cartTotal,
+        toastMessage,
+        showToast,
       }}
     >
       {children}
+      <Toast message={toastMessage} />
     </Cartcontext.Provider>
   );
 }

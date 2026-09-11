@@ -54,7 +54,7 @@ WhatsApp is an optional browser handoff, not a backend integration. When configu
 Create a local `.env` file from `.env.example`:
 
 ```env
-VITE_WHATSAPP_NUMBER=923001234567
+VITE_WHATSAPP_NUMBER=YOUR_BUSINESS_NUMBER
 ```
 
 Use digits only with the country code. The number is public client configuration, so use a business number rather than a private secret. Without it, WhatsApp actions remain unavailable instead of opening a broken generic link.

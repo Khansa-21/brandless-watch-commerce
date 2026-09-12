@@ -67,17 +67,6 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
             {heading || (featured ? "Time, well spent." : "Shop all pieces.")}
           </h2>
         </div>
-        {!featured && (
-          <select
-            aria-label="Sort products"
-            value={sort}
-            onChange={(event) => setSort(event.target.value)}
-          >
-            <option value="featured">Sort: Featured</option>
-            <option value="price-low">Price: Low to high</option>
-            <option value="price-high">Price: High to low</option>
-          </select>
-        )}
       </div>
       {!featured && (
         <div className="catalog-controls">
@@ -133,6 +122,18 @@ const ProductCatalog = ({ featured = false, heading, categoryFilter }) => {
               </select>
             </label>
           </div>
+          <label className="sort-select-label">
+            Sort
+            <select
+              aria-label="Sort products"
+              value={sort}
+              onChange={(event) => setSort(event.target.value)}
+            >
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to high</option>
+              <option value="price-high">Price: High to low</option>
+            </select>
+          </label>
         </div>
       )}
       <div className="product-grid" aria-live="polite">
